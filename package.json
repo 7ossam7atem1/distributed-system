@@ -1,0 +1,15 @@
+{
+  "name": "distributed-system",
+  "version": "1.0.0",
+  "description": "Educational project implementing basic concepts of distributed systems  & low-level networking",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Hossam Hatem",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.5.4"
+  }
+}
