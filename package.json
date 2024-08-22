@@ -10,6 +10,11 @@
   "author": "Hossam Hatem",
   "license": "ISC",
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/node": "^22.5.0",
     "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "distributed-system": "file:"
   }
 }
