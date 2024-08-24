@@ -52,6 +52,21 @@ const server = net.createServer((socket) => {
         console.error(`Key "${key}" not found!`);
         socket.write(`ERROR: ${key} not found!`);
       }
+    } else if (command === 'DEL') {
+      if (!key) {
+        console.error(`Recieved inappropriate or incomplete DEL command`);
+        socket.write(`ERROR: DEL command must include key`);
+        return;
+      }
+
+      const isKeyExistandDeleted = store.delete(key);
+      if (!isKeyExistandDeleted) {
+        console.error(`Key "${key}" not found!`);
+        socket.write(`ERROR: Key ${key} not found!`);
+      } else {
+        console.log(`DEL Key ${key}`);
+        socket.write(`Success: Value DELETED for the key ${key}`);
+      }
     }
   });
 
