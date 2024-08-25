@@ -1,9 +1,10 @@
 import * as net from 'net';
 import dotenv from 'dotenv';
-
+import { loadConfig } from '../utils/utils';
 dotenv.config();
-const PORT = process.env.PORT || 5000;
-
+// const PORT = process.env.PORT || 5000;
+const config = loadConfig();
+const port = config.port;
 const store = new Map<string, string>();
 
 const server = net.createServer((socket) => {
@@ -75,6 +76,6 @@ const server = net.createServer((socket) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`Server is running on ${PORT}`);
+server.listen(port, () => {
+  console.log(`Server is running on ${port}`);
 });
