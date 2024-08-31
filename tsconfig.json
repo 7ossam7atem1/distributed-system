@@ -9,6 +9,6 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts", "src/data/store.js"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }
