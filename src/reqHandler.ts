@@ -9,7 +9,7 @@ export function handleRequest(
 ) {
   const request = data.toString().trim();
 
-  const [command = '', key = '', value = ''] = request.split(' ');
+  const [command = '', key = '', value = '' , forwarded = ''] = request.split(' ');
 
   const validCommand =
     command === 'GET' || command === 'SET' || command === 'DEL';
@@ -41,7 +41,7 @@ export function handleRequest(
 
     socket.write(`Success: Key "${key}" has been set with value "${value}".`);
 
-    sendRequest(command, key, value, nodes);
+    sendRequest(command, key, value, nodes , forwarded);
   } else if (command === 'GET') {
     if (!key) {
       console.error('Received incomplete GET command.');
@@ -74,7 +74,7 @@ export function handleRequest(
       console.log(`DEL Key=${key}`);
       socket.write(`Success: Value DELETED for Key "${key}".`);
 
-      sendRequest(command, key, '', nodes);
+      sendRequest(command, key, '', nodes , forwarded);
     }
   }
 }

@@ -4,14 +4,17 @@ export function sendRequest(
   command: string,
   key: string,
   value: string,
-  nodes: string[]
+  nodes: string[],
+  forwarded: string
 ) {
+  if (forwarded) return;
   nodes.forEach((node: any) => {
     const [host, port] = node.split(':');
 
     const client = new net.Socket();
     client.connect(Number(port), host, () => {
-      client.write(`${command} ${key} ${value}`);
+      console.log(`Connected to server on port ${port}`);
+      client.write(`${command} ${key} ${value} forwarded`);
     });
     client.on('data', (data) => {
       console.log(`Response from ${node}: ${data.toString()}`);
