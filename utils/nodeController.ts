@@ -1,10 +1,11 @@
 import * as net from 'net';
-import { loadConfig } from './utils';
 
-const config = loadConfig();
-const nodes = config.nodes;
-
-export function sendRequest(command: string, key: string, value: string) {
+export function sendRequest(
+  command: string,
+  key: string,
+  value: string,
+  nodes: string[]
+) {
   nodes.forEach((node: any) => {
     const [host, port] = node.split(':');
 

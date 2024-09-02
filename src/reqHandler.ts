@@ -2,8 +2,9 @@ import * as net from 'net';
 import { store } from '../utils/utils';
 import { sendRequest } from '../utils/nodeController';
 
-export function handleRequest(socket: net.Socket, data: Buffer) {
-  const request = data.toString().trim();
+
+export function handleRequest(socket: net.Socket, data: Buffer , nodes: string[]){
+const request = data.toString().trim();
 
   const [command = '', key = '', value = ''] = request.split(' ');
 
@@ -31,7 +32,7 @@ export function handleRequest(socket: net.Socket, data: Buffer) {
 
     socket.write(`Success: Key "${key}" has been set with value "${value}".`);
 
-    sendRequest(command, key, value);
+    sendRequest(command, key, value , nodes);
   } else if (command === 'GET') {
     if (!key) {
       console.error('Received incomplete GET command.');
@@ -64,7 +65,7 @@ export function handleRequest(socket: net.Socket, data: Buffer) {
       console.log(`DEL Key=${key}`);
       socket.write(`Success: Value DELETED for Key "${key}".`);
 
-      sendRequest(command, key, '');
+      sendRequest(command, key, '' , nodes);
     }
   }
 }
