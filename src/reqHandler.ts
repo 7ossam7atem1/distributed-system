@@ -2,9 +2,12 @@ import * as net from 'net';
 import { store } from '../utils/utils';
 import { sendRequest } from '../utils/nodeController';
 
-
-export function handleRequest(socket: net.Socket, data: Buffer , nodes: string[]){
-const request = data.toString().trim();
+export function handleRequest(
+  socket: net.Socket,
+  data: Buffer,
+  nodes: string[]
+) {
+  const request = data.toString().trim();
 
   const [command = '', key = '', value = ''] = request.split(' ');
 
@@ -26,13 +29,19 @@ const request = data.toString().trim();
       return;
     }
 
+    if (store.has(key)) {
+      console.error(`Key ${key} is already exists!`);
+      socket.write(`ERROR: Key "${key}" is already exists, It must be unique.`);
+      return;
+    }
+
     store.set(key, value);
 
     console.log(`SET Key=${key} value=${value}`);
 
     socket.write(`Success: Key "${key}" has been set with value "${value}".`);
 
-    sendRequest(command, key, value , nodes);
+    sendRequest(command, key, value, nodes);
   } else if (command === 'GET') {
     if (!key) {
       console.error('Received incomplete GET command.');
@@ -65,7 +74,7 @@ const request = data.toString().trim();
       console.log(`DEL Key=${key}`);
       socket.write(`Success: Value DELETED for Key "${key}".`);
 
-      sendRequest(command, key, '' , nodes);
+      sendRequest(command, key, '', nodes);
     }
   }
 }

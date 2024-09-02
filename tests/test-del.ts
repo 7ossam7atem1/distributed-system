@@ -2,8 +2,8 @@ import * as net from 'net';
 
 const client = new net.Socket();
 
-client.connect(3000, 'localhost', () => {
-  console.log('Connected to server');
+client.connect(3002, 'localhost', () => {
+  console.log('Connected to server C');
   client.write('DEL testKey');
 });
 
