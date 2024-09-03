@@ -1,6 +1,6 @@
 import * as net from 'net';
-import { store } from '../utils/utils';
-import { sendRequest } from '../utils/nodeController';
+import { store } from '../../utils/utils';
+import { sendRequest } from '../services/nodeController';
 
 export function handleRequest(
   socket: net.Socket,

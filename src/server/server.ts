@@ -1,6 +1,6 @@
 import * as net from 'net';
 import dotenv from 'dotenv';
-import { handleRequest } from './reqHandler';
+import { handleRequest } from '../controllers/reqHandler';
 dotenv.config();
 // const PORT = process.env.PORT || 5000;
 export function createServer(port: number, nodes: string[] = []) {

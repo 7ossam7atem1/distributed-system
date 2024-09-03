@@ -1,5 +1,5 @@
-import {createServer} from './server';
-import { loadConfig } from '../utils/utils';
+import {createServer} from '../server/server';
+import { loadConfig } from '../../utils/utils';
 
 
 const configFileName = process.argv[2];
