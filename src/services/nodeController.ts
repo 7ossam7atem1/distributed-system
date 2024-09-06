@@ -4,12 +4,12 @@ export function sendRequest(
   command: string,
   key: string,
   value: string,
-  nodes: string[],
+  nodes: Node[],
   forwarded: string
 ) {
   if (forwarded) return;
-  nodes.forEach((node: any) => {
-    const [host, port] = node.split(':');
+  nodes.forEach((node: Node) => {
+    const { host, port } = node;
 
     const client = new net.Socket();
     client.connect(Number(port), host, () => {

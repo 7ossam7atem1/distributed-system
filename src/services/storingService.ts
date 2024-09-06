@@ -1,12 +1,13 @@
 import { store } from '../../utils/utils';
 
 import { sendRequest } from './nodeController';
+import Node from '../interfaces/node.types';
 
 export function setKey(
   key: string,
   value: string,
   forwarded: string,
-  nodes: string[]
+  nodes: Node[]
 ): string {
   if (!key || !value) {
     console.error('Received inappropriate OR incomplete SET command.');
@@ -26,7 +27,7 @@ export function setKey(
   return `Success: Key "${key}" has been set with value "${value}".`;
 }
 
-export function getKey(key: string, forwarded: string, node: string[]): string {
+export function getKey(key: string): string {
   if (!key) {
     console.error('Received incomplete GET command.');
     return `ERROR: GET command must include key.`;
@@ -43,7 +44,7 @@ export function getKey(key: string, forwarded: string, node: string[]): string {
     return `ERROR: Key "${key}" not found.`;
   }
 }
-export function delKey(key: string, forwarded: string, nodes: string[]) {
+export function delKey(key: string, forwarded: string, nodes: Node[]) {
   if (!key) {
     console.error('Received incomplete DEL command.');
     return `ERROR: DEL command must include key.`;

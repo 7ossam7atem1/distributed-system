@@ -1,9 +1,10 @@
 import * as net from 'net';
 import dotenv from 'dotenv';
 import { handleRequest } from '../controllers/reqHandler';
+import Node from '../interfaces/node.types';
 dotenv.config();
 // const PORT = process.env.PORT || 5000;
-export function createServer(port: number, nodes: string[]) {
+export function createServer(port: number, nodes: Node[]) {
   const server = net.createServer((socket) => {
     console.log(`client connected on prot ${port}`);
 
