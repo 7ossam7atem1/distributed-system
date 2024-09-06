@@ -1,5 +1,5 @@
 import * as net from 'net';
-
+import Node from '../interfaces/node.types';
 export function sendRequest(
   command: string,
   key: string,
