@@ -4,7 +4,7 @@ import Node from '../interfaces/node.types';
 const HEARTBEAT_INTERVAL = 5000;
 const HEARTBEAT_TIMEOUT = 3500;
 
-export function startSniffering(nodes: Node[]) {
+export function startSniffing(nodes: Node[]) {
   setInterval(() => {
     nodes.forEach((node) => {
       const { host, port } = node;
@@ -13,42 +13,47 @@ export function startSniffering(nodes: Node[]) {
         return;
       }
       const client = new net.Socket();
+      let heartbeatTimeout: NodeJS.Timeout;
       client.connect(Number(port), host, () => {
         client.write('HEARTBEAT PROCESS GOING ON');
+        heartbeatTimeout = setTimeout(() => {
+          if (!client.destroyed) {
+            console.error(`Server hosted on port ${port} is DEAD`);
+            node.isRunning = false;
+            client.destroy();
+          }
+        }, HEARTBEAT_TIMEOUT);
       });
       client.on('data', (data) => {
         const response = data.toString().trim();
+        clearTimeout(heartbeatTimeout);
         if (response === 'ALIVE') {
           node.isRunning = true;
           console.log(`Server hosted on port ${node.port} is ALIVE!`);
+        } else {
+          node.isRunning = false;
+          console.error(
+            `Unexpected response from the server on port ${node.port}`
+          );
         }
 
         client.destroy();
       });
       client.on('error', (err) => {
-        console.error(
-          `Error sending heartbeat to server hosted on the port ${node.port} , ${err.message}`
-        );
-        client.destroy();
-      });
+        clearTimeout(heartbeatTimeout);
 
-      client.on('timeout', () => {
         console.error(
-          `Heartbeat timeout for server running on the port ${node.port}`
+          `Server hosted on port: ${node.port} is DEAD${
+            err ? `, due to ${err}` : '.'
+          }`
         );
         node.isRunning = false;
         client.destroy();
       });
       client.on('end', () => {
         console.log(`Connection ended with server hosted on port ${node.port}`);
+        node.isRunning = false;
       });
-      setTimeout(() => {
-        if (!client.destroyed) {
-          node.isRunning = false;
-          console.log(`Server hosted on port: ${node.port} is DEAD`);
-          client.destroy();
-        }
-      }, HEARTBEAT_TIMEOUT);
     });
   }, HEARTBEAT_INTERVAL);
 }
