@@ -9,7 +9,11 @@ export function sendRequest(
 ) {
   if (forwarded) return;
   nodes.forEach((node: Node) => {
-    const { host, port } = node;
+    const { host, port, isRunning } = node;
+    if (!isRunning) {
+      console.error(`Server on port : ${port} is DEAD`);
+      return;
+    }
 
     const client = new net.Socket();
     client.connect(Number(port), host, () => {
@@ -17,11 +21,13 @@ export function sendRequest(
       client.write(`${command} ${key} ${value} forwarded`);
     });
     client.on('data', (data) => {
-      console.log(`Response from ${node}: ${data.toString()}`);
+      console.log(
+        `Response from server on port ${node.port}: ${data.toString()}`
+      );
       client.destroy();
     });
     client.on('error', (err) => {
-      console.error(`Error with ${node}: ${err.message}`);
+      console.error(`Error with server on port ${node.port}: ${err.message}`);
     });
   });
 }
