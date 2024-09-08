@@ -1,5 +1,5 @@
 import * as net from 'net';
-import { delKey, getKey, setKey } from '../services/storingService';
+import { delKey, getKey, setKey, updKey } from '../services/storingService';
 import Node from '../interfaces/node.types';
 
 let clientMessage: string;
@@ -30,6 +30,9 @@ export function handleRequest(socket: net.Socket, data: Buffer, nodes: Node[]) {
     socket.write(clientMessage);
   } else if (command === 'DEL') {
     clientMessage = delKey(key, forwarded, nodes);
+    socket.write(clientMessage);
+  } else if (command === 'UPD') {
+    clientMessage = updKey(key, value, forwarded, nodes);
     socket.write(clientMessage);
   }
 }

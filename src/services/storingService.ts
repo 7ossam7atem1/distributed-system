@@ -63,3 +63,26 @@ export function delKey(key: string, forwarded: string, nodes: Node[]) {
     return `Success: Value DELETED for Key "${key}".`;
   }
 }
+
+export function updKey(
+  key: string,
+  value: string,
+  forwarded: string,
+  nodes: Node[]
+): string {
+  if (!key || !value) {
+    console.error(`Recieved inappropriate or incomplete UPD command`);
+    return `ERROR: UPD must include key and value `;
+  }
+
+  if (!store.has(key)) {
+    console.error(`Key "${key}" is not exist.`);
+    return `ERROR: Key "${key}" is not exist.`;
+  }
+
+  store.set(key, value);
+
+  console.log(`Success: UPD Key=${key} value=${value}`);
+  sendRequest('UPD', key, value, nodes, forwarded);
+  return `Success: Key "${key}" has been updated with the value "${value}".`;
+}
