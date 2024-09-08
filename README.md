@@ -1,96 +1,144 @@
 # Distributed System Mock
 
-## Introduction
+## Table of Contents
 
-Welcome to my distributed systems educational project!🥳 This project is all about learning distributed systems, HTTP, TCP/IP, Node.js, and TypeScript. I've intentionally kept it low-level and avoided using frameworks to dive deep into the core concepts. It's a work in progress, so stay tuned for more updates!
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Setup and Installation](#setup-and-installation)
+- [Usage Guide](#usage-guide)
+  - [Starting a Server](#starting-a-server)
+  - [Using the Client](#using-the-client)
+- [Visualization](#visualization)
+  - [System Architecture](#system-architecture)
+  - [Command Forwarding](#command-forwarding)
+- [Example Scenarios](#example-scenarios)
+  - [Scenario 1: Basic Operations](#scenario-1-basic-operations)
+  - [Scenario 2: Fault Tolerance and Recovery](#scenario-2-fault-tolerance-and-recovery)
 
 ## Project Overview
 
-A distributed key-value store implemented with Node.js and TypeScript. The system ensures data consistency across multiple nodes. This project helped me understand distributed systems and low-level networking concepts by avoiding high-level frameworks and focusing on fundamental and core technologies.
+This project demonstrates a distributed key-value store using raw TCP connections with Node.js and TypeScript. It is designed to help you understand the principles of distributed systems, low-level networking, and CLI-based interaction.
 
 ## Features
 
-- **Basic Commands**: Supports `SET`, `GET`, and `DEL` commands.
-- **Distributed Architecture**: Requests are forwarded across multiple nodes/teers.
-- **Data Consistency**: Ensures all nodes have a consistent view of the data.
-- **Error Handling**: Handles invalid commands and missing keys gracefully.
+- **Distributed Architecture**: Operates across three nodes to ensure data consistency.
+- **Command Support**: Implements basic commands like `GET`, `SET`, `UPD`, and `DEL`.
+- **Node Failure Detection**: Monitors and manages node failures with a heartbeat mechanism.
+- **Recovery Mechanism**: Synchronizes recovered nodes with the rest of the system.
+- **CLI Tools**: Provides command-line interfaces for both server management and client interactions.
 
-## Workflow
+## Setup and Installation
 
-1. **Start the Servers**: Launch multiple server instances to act as nodes in the distributed system.
-2. **Client Requests**: Clients can connect to any node and send commands.
-3. **Command Processing**: Node process the commands and update the local store then forward the request to other nodes.
-4. **Response**: The node sends a response back to the client.
+1. **Clone the Repository**
 
-## TODOs
-
-- **Add Different Types of Nodes**: Explore adding different types of nodes with specialized roles.
-- **Increase the Complexity of the nodeController**: Enhance the `nodeController` to handle more complex scenarios and improve efficiency.
-- **Use WebSocket for Frontend**: Implement a frontend using React and WebSocket to interact with the distributed system in real-time.
-- **Improve Concurrency Handling**: Optimize the system to handle concurrent requests more efficiently.
-- **Enhance Fault Tolerance**: Implement more robust mechanisms to handle node failures and ensure system reliability.
-
-## How to Run
-
-1. **Clone the Repository**:
-
-   ```sh
+   ```bash
    git clone https://github.com/7ossam7atem1/distributed-system.git
    cd distributed-system
-
    ```
 
-2. **Install Dependencies**:
+2. **Install Dependencies**
 
-   ```sh
+   ```bash
    npm install
-
    ```
 
-3. **Start the Servers**:
+## Usage Guide
 
-   ```sh
-   npx ts-node src/index.ts configFileName.json
+### [Starting a Server](#starting-a-server)
 
-   ```
+To start a server, use the following command:
 
-> Example:
->
-> ```sh
-> npx ts-node src/index.ts config1.json
-> ```
->
-> 4. **Run the Client**:
-
-```sh
-npx ts-node tests/test-command.ts
-
+```bash
+npm start
 ```
 
-> Example:
->
-> ```sh
-> npx ts-node tests/test-set.ts
-> ```
+You will be prompted to choose which server instance to run.
 
-## Screenshots
+### [Using the Client](#using-the-client)
 
-![System archeticture](/public/Full%20Archeticture/Archeticture.png)
+To interact with a server, use the following command:
 
-<br>
-<hr>
-<br>
+```bash
+npm test
+```
 
-![SET command](/public/sample%20commands/SET-Command-diagram.png)
+You will be prompted to select a server instance and then execute commands like `SET`, `GET`, `UPD`, and `DEL`.
 
-<br>
-<hr>
-<br>
+## Visualization
 
-![Test SET command](/public/sample%20commands/testSET.png)
+### [System Architecture](#system-architecture)
 
-<br>
+![System Architecture Diagram](/public/Full%20Archeticture/Archeticture.png)
 
-## Under Development
+_Diagram showing the overall architecture of the distributed key-value store system._
 
-This project is still under development. It's my playground to learn and experiment, so expect frequent updates and changes. Feel free to explore, suggest improvements, or even fork the project and build your own version :)
+### [Command Forwarding](#command-forwarding)
+
+![Command Forwarding Diagram](/public/sample%20commands/SET-Command-diagram.png)
+
+_Diagram illustrating how the `SET` command is forwarded from Server A to other nodes._
+
+## Example Scenarios
+
+### Scenario 1: Basic Operations
+
+1. **Start Server Instances:**  
+   Run the servers using `npm start` for Server A, Server B, and Server C.
+
+2. **Set a Value Using Client CLI:**  
+   Connect to Server A and execute the command:
+
+   ```bash
+   SET testKey testValue
+   ```
+
+   The `SET` command will be forwarded to Server B and Server C.
+
+3. **Get the Value:**  
+   Execute the command to retrieve the value:
+
+   ```bash
+   GET testKey
+   ```
+
+   Confirm that `testKey` returns `testValue` from Server A, Server B, and Server C.
+
+4. **Update the Value:**  
+   Update the value using the command:
+
+   ```bash
+   UPD testKey newValue
+   ```
+
+   Ensure that all servers reflect the updated value `newValue`.
+
+5. **Delete the Key:**  
+   Execute the delete command:
+
+   ```bash
+   DEL testKey
+   ```
+
+   Verify that `testKey` is no longer present on Server A, Server B, and Server C.
+
+### Scenario 2: Fault Tolerance and Recovery
+
+1. **Start Server Instances:**  
+   Ensure all server instances are running.
+
+2. **Simulate Node Failure:**  
+   Stop Server B to simulate a failure.
+
+3. **Send Commands:**  
+   Execute commands using the Client CLI and verify that Server A and Server C process them.
+
+4. **Restart the Failed Node:**  
+   Restart Server B and check the recovery process.
+
+5. **Verify Recovery:**  
+   Confirm that Server B resynchronizes with Server A and Server C and reflects the latest data.
+
+6. **Check Data Consistency:**  
+   Ensure that all servers have consistent data after the recovery of Server B.
+
+
