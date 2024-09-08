@@ -75,19 +75,19 @@ npx ts-node tests/test-command.ts
 
 ## Screenshots
 
-![System archeticture](/public/screenshots/Full%20Archeticture//Archeticture.png)
+![System archeticture](/public/Full%20Archeticture/Archeticture.png)
 
 <br>
 <hr>
 <br>
 
-![SET command](/public/screenshots/sample%20commands/SET-Command-diagram.png)
+![SET command](/public/sample%20commands/SET-Command-diagram.png)
 
 <br>
 <hr>
 <br>
 
-![Test SET command](/public/screenshots/sample%20commands/testSET.png)
+![Test SET command](/public/sample%20commands/testSET.png)
 
 <br>
 

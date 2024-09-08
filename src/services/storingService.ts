@@ -1,5 +1,4 @@
-import { store } from '../../utils/utils';
-
+import store from '../data/store'
 import { sendRequest } from './nodeController';
 import Node from '../interfaces/node.types';
 
