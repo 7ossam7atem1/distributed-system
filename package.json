@@ -4,7 +4,8 @@
   "description": "Educational project implementing basic concepts of distributed systems  & low-level networking",
   "main": "index.js",
   "scripts": {
-    "start": "npx ts-node src/server/index.ts"
+    "start": "npx ts-node src/server/index.ts",
+    "test": "npx ts-node src/client/index.ts"
   },
   "keywords": [],
   "author": "Hossam Hatem",
@@ -16,6 +17,7 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
+    "@inquirer/prompts": "^5.5.0",
     "@inquirer/select": "^2.5.0",
     "distributed-system": "file:"
   }

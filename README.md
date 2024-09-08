@@ -55,38 +55,42 @@ A distributed key-value store implemented with Node.js and TypeScript. The syste
    ```
 
 > Example:
+>
 > ```sh
 > npx ts-node src/index.ts config1.json
 > ```
-4. **Run the Client**:
+>
+> 4. **Run the Client**:
 
-   ```sh
-   npx ts-node tests/test-command.ts
+```sh
+npx ts-node tests/test-command.ts
 
-   ```
+```
 
 > Example:
+>
 > ```sh
 > npx ts-node tests/test-set.ts
 > ```
+
 ## Screenshots
 
-![System archeticture](/public/screenshots/Archeticture.png)
+![System archeticture](/public/screenshots/Full%20Archeticture//Archeticture.png)
 
 <br>
 <hr>
 <br>
 
-![SET command](/public/screenshots/SET-Command-diagram.png)
+![SET command](/public/screenshots/sample%20commands/SET-Command-diagram.png)
 
 <br>
 <hr>
 <br>
 
-![Test SET command](/public/screenshots/testSET.png)
+![Test SET command](/public/screenshots/sample%20commands/testSET.png)
 
 <br>
 
 ## Under Development
 
-This project is still under development. It's my playground to learn and experiment, so expect frequent updates and changes. Feel free to explore, suggest improvements, or even fork the project and build your own version :) 
+This project is still under development. It's my playground to learn and experiment, so expect frequent updates and changes. Feel free to explore, suggest improvements, or even fork the project and build your own version :)

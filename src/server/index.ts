@@ -1,9 +1,9 @@
 import { createServer } from '../server/server';
 import { loadConfig } from '../services/configService';
-import select from '@inquirer/select';
+import { select } from '@inquirer/prompts';
 
-async function start() {
-  const configFileName = await select({
+async function main() {
+  const configFileName: string = await select({
     message: 'Please choose the server you want to run:',
     choices: [
       {
@@ -27,4 +27,4 @@ async function start() {
   createServer(config.port, config.nodes);
 }
 
-start();
+main();

@@ -14,7 +14,10 @@ export function handleRequest(socket: net.Socket, data: Buffer, nodes: Node[]) {
     request.split(' ');
 
   const validCommand: boolean =
-    command === 'GET' || command === 'SET' || command === 'DEL';
+    command === 'GET' ||
+    command === 'SET' ||
+    command === 'DEL' ||
+    command === 'UPD';
 
   if (!command || !validCommand) {
     console.error('Received an empty or invalid command.');

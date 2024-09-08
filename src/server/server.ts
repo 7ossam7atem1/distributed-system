@@ -9,6 +9,13 @@ export function createServer(port: number, nodes: Node[]) {
     socket.on('data', (data) => {
       handleRequest(socket, data, nodes);
     });
+
+    socket.on('close', (hadError) => {
+      console.warn(
+        `Client disconnected${hadError ? ' due to an error.' : '.'}`
+      );
+    });
+
     socket.on('error', (err) => {
       console.error(`Socket error: ${err.message}`);
     });
