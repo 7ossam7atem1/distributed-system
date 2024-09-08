@@ -18,7 +18,9 @@ export function startSniffing(nodes: Node[]) {
         client.write('HEARTBEAT PROCESS GOING ON');
         heartbeatTimeout = setTimeout(() => {
           if (!client.destroyed) {
-            console.error(`Server hosted on port ${port} is DEAD`);
+            console.warn(
+              `Heartbeat to server on port ${port} timed out. Marking as DEAD.`
+            );
             node.isRunning = false;
             client.destroy();
           }
@@ -29,11 +31,11 @@ export function startSniffing(nodes: Node[]) {
         clearTimeout(heartbeatTimeout);
         if (response === 'ALIVE') {
           node.isRunning = true;
-          console.log(`Server hosted on port ${node.port} is ALIVE!`);
+          console.log(`Server on port ${port} is ACTIVE and responding.`);
         } else {
           node.isRunning = false;
           console.error(
-            `Unexpected response from the server on port ${node.port}`
+            `Unexpected response from server on port ${port}: ${response}. Marking as DEAD.`
           );
         }
 
@@ -42,16 +44,14 @@ export function startSniffing(nodes: Node[]) {
       client.on('error', (err) => {
         clearTimeout(heartbeatTimeout);
 
-        console.error(
-          `Server hosted on port: ${node.port} is DEAD${
-            err ? `, due to ${err}` : '.'
-          }`
+        console.warn(
+          `Heartbeat to server on port ${port} timed out. Marking as DEAD.`
         );
         node.isRunning = false;
         client.destroy();
       });
       client.on('end', () => {
-        console.log(`Connection ended with server hosted on port ${node.port}`);
+        console.log(`Connection with server on port ${port} ended.`);
         node.isRunning = false;
       });
     });
